@@ -1,0 +1,95 @@
+version: '3.8'
+
+services:
+  # llama.cpp server - LLM inference engine
+  llama-server:
+    image: ghcr.io/ggerganov/llama.cpp:server
+    container_name: intellistant-llama
+    volumes:
+      - ./models:/models:ro
+    command: >
+      --model /models/qwen2.5-coder-3b/instruct-q4_k_m.gguf
+      --host 0.0.0.0
+      --port 8080
+      --n-gpu-layers 99
+      --ctx-size 4096
+      --threads 4
+    ports:
+      - "8080:8080"
+    networks:
+      - intellistant-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    deploy:
+      resources:
+        limits:
+          memory: 8G
+        reservations:
+          memory: 4G
+
+  # Intellistant API Server
+  intellistant-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: intellistant-api
+    depends_on:
+      llama-server:
+        condition: service_healthy
+    environment:
+      - LLAMA_HOST=llama-server
+      - LLAMA_PORT=8080
+      - API_PORT=8000
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./logs:/app/logs
+      - ./data:/app/data
+    networks:
+      - intellistant-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 500M
+        reservations:
+          memory: 100M
+
+  # Intellistant CLI (optional, for interactive use)
+  intellistant-cli:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: intellistant-cli
+    depends_on:
+      llama-server:
+        condition: service_healthy
+    environment:
+      - LLAMA_HOST=llama-server
+      - LLAMA_PORT=8080
+    command: ./intellistant_cli
+    stdin_open: true
+    tty: true
+    networks:
+      - intellistant-network
+    profiles:
+      - cli
+
+networks:
+  intellistant-network:
+    driver: bridge
+
+volumes:
+  models:
+  logs:
+  data:

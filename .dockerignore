@@ -1,0 +1,52 @@
+# Build artifacts
+build/
+cmake-build-*/
+.cmake/
+
+# Git
+.git/
+.gitignore
+
+# Models (large files, mount as volume instead)
+models/
+*.gguf
+
+# Runtime (large files)
+runtime/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Documentation (except what we need)
+docs/*.md
+!docs/USER_MANUAL.md
+
+# Logs
+logs/
+*.log
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Backup files
+*.bak
+*.backup
+
+# Docker files (don't need inside image)
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Development files
+V1.1_ROADMAP.md
+RELEASE_GUIDE.md
+PROJECT_COMPLETE.md
+prompt.txt
+
+# Test data
+tests/data/

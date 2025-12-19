@@ -1,0 +1,77 @@
+# Build directories
+build/
+cmake-build-*/
+.cmake/
+
+# Compiled files
+*.o
+*.so
+*.a
+*.dylib
+*.exe
+
+# Test executables
+llm_client_tests
+mcp_tools_tests
+agent_tests
+coordinator_tests
+
+# Demo executables
+mcp_demo
+agent_demo
+coordinator_demo
+
+# Production executables
+intellistant_cli
+intellistant_server
+
+# Runtime and models (large files)
+runtime/
+models/
+*.gguf
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# CMake files
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+*.cmake
+!CMakeLists.txt
+
+# Coverage
+*.gcda
+*.gcno
+*.gcov
+coverage/
+
+# Package managers
+.conan/
+vcpkg_installed/
+
+# Backup files
+*.bak
+*.backup
+
+# Core dumps
+core
+core.*

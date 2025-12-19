@@ -1,0 +1,71 @@
+Context - long-term purpose: Development of a C++23 production-ready multi-agent AI framework
+Role: Developer
+Prompt - short-term purpose: I've designed the structure of the framework in such a way that a 
+coordinator handling all of the communications between autonomous agents and llama.cpp inference engine 
+(runtime) and a selected LLM. I'm going to develop step-by-step. 
+At first, I've presented httplib.h (cpp-httplib) and want you to write llm_client.hpp headers 
+to handle client/server communications. Develop this file to be completed and professional-grade capabilities.
+Write some tests for them, after being successful, we keep going on to next phase, 
+adding agents and coordinator and ... 
+If you have any new idea, recommendations or anything tell me, if I agree you can implement it.
+I want you to have a comprehensive collaboration, before any implementation ask me, I'll answer you.
+Take a look at the project structure (folders) to understand the workflows.
+PascalCase classes. snake_case functions/variables. Allman style braces. 4-tab spacing.
+Spacing inside the namespace blocks. Develop everything inside namespace pooriayousefi - it's my signature.
+Write every module as header-only (do not separate .hpp and .cpp files. everything inside the .hpp files).
+Use header-only versions of every dependencies as much as possible. Because I wan the framework to be
+independent as possible and cross-platform for deployment. I want you to use this approach for development design:
+Do not think vastly at first, keep focused on current phase without thinking on the other phases of the project.
+I mean make a todo list to implement but start developing the first item inside the list, write its corresponding
+tests and run them. After fully successful test results, we keep moving to the implementation of the next phase.
+I think it'd better to implement llm_client.hpp and llm_client_tests.cpp files first. After its fully functioning,
+we could keep continue developing:
+tools.hpp + tools_tests.cpp (for tools calling or functions calling capability of agents)
+agent.hpp + agent_tests.cpp (with chat and tools calling skills)
+coordinator.hpp + coordinator_tests.cpp
+
+Design Requirements
+Code Style:
+
+PascalCase for classes
+snake_case for functions/variables
+Allman style braces
+4-tab spacing
+Spacing inside namespace blocks
+Everything in namespace pooriayousefi
+Header-only implementation
+Development Approach:
+
+Focus on current phase only
+Create todo list but implement step-by-step
+Write tests for each module
+Ensure full functionality before moving to next phase
+Phase 1 Design: LLM Client
+Let me propose the design for llm_client.hpp:
+
+Key Components:
+LlmClient Class - Main client to communicate with llama-server
+
+HTTP client using httplib.h
+Connection management (host, port, timeouts)
+Request/response handling
+Error handling and retries
+Core Functionality:
+
+completion() - Text completion requests
+chat_completion() - Chat-based completion
+tokenize() - Tokenization
+detokenize() - Detokenization
+embeddings() - Get embeddings
+health_check() - Server health status
+Configuration:
+
+Temperature, top_p, top_k sampling parameters
+Max tokens, stop sequences
+Streaming support
+Model parameters
+Response Types:
+
+Structured response objects
+JSON parsing using nlohmann/json (from jsonrpc2)
+Error handling with optional/expected pattern
