@@ -48,6 +48,13 @@ logs/
 # Temporary files
 tmp/
 temp/
+
+# Internal/personal documentation (not for public repo)
+prompt.txt
+GITHUB_STRATEGY.md
+V1.1_ROADMAP.md
+RELEASE_GUIDE.md
+PROJECT_COMPLETE.md
 *.tmp
 
 # CMake files
